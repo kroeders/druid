@@ -297,7 +297,8 @@ public class DataSourcesResource
   public Response markAsUnusedAllSegmentsOrKillUnusedSegmentsInInterval(
       @PathParam("dataSourceName") final String dataSourceName,
       @QueryParam("kill") final String kill,
-      @QueryParam("interval") final String interval
+      @QueryParam("interval") final String interval,
+      @QueryParam("numThreads") final Integer numThreads
   )
   {
     if (indexingServiceClient == null) {
@@ -306,7 +307,7 @@ public class DataSourcesResource
 
     boolean killSegments = kill != null && Boolean.valueOf(kill);
     if (killSegments) {
-      return killUnusedSegmentsInInterval(dataSourceName, interval);
+      return killUnusedSegmentsInInterval(dataSourceName, interval, numThreads);
     } else {
       MarkSegments markSegments = () -> segmentsMetadataManager.markAsUnusedAllSegmentsInDataSource(dataSourceName);
       return doMarkSegments("markAsUnusedAllSegments", dataSourceName, markSegments);
@@ -319,7 +320,8 @@ public class DataSourcesResource
   @Produces(MediaType.APPLICATION_JSON)
   public Response killUnusedSegmentsInInterval(
       @PathParam("dataSourceName") final String dataSourceName,
-      @PathParam("interval") final String interval
+      @PathParam("interval") final String interval,
+      @QueryParam("numThreads") final Integer numThreads
   )
   {
     if (indexingServiceClient == null) {
@@ -330,7 +332,7 @@ public class DataSourcesResource
     }
     final Interval theInterval = Intervals.of(interval.replace('_', '/'));
     try {
-      indexingServiceClient.killUnusedSegments(dataSourceName, theInterval);
+      indexingServiceClient.killUnusedSegments(dataSourceName, theInterval, numThreads);
       return Response.ok().build();
     }
     catch (Exception e) {

@@ -74,7 +74,7 @@ public class KillUnusedSegmentsTaskTest extends IngestionTestBase
     );
 
     final KillUnusedSegmentsTask task =
-        new KillUnusedSegmentsTask(null, DATA_SOURCE, Intervals.of("2019-03-01/2019-04-01"), null);
+        new KillUnusedSegmentsTask(null, DATA_SOURCE, Intervals.of("2019-03-01/2019-04-01"), null, null);
 
     Assert.assertEquals(TaskState.SUCCESS, taskRunner.run(task).get().getStatusCode());
 

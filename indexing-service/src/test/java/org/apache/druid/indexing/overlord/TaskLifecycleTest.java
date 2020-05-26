@@ -922,7 +922,7 @@ public class TaskLifecycleTest
     }
 
     final Task killUnusedSegmentsTask =
-        new KillUnusedSegmentsTask(null, "test_kill_task", Intervals.of("2011-04-01/P4D"), null);
+        new KillUnusedSegmentsTask(null, "test_kill_task", Intervals.of("2011-04-01/P4D"), null, null);
 
     final TaskStatus status = runTask(killUnusedSegmentsTask);
     Assert.assertEquals(taskLocation, status.getLocation());

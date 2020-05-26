@@ -592,13 +592,13 @@ public class DataSourcesResourceTest
     Interval theInterval = Intervals.of(interval.replace('_', '/'));
 
     IndexingServiceClient indexingServiceClient = EasyMock.createStrictMock(IndexingServiceClient.class);
-    indexingServiceClient.killUnusedSegments("datasource1", theInterval);
+    indexingServiceClient.killUnusedSegments("datasource1", theInterval, null);
     EasyMock.expectLastCall().once();
     EasyMock.replay(indexingServiceClient, server);
 
     DataSourcesResource dataSourcesResource =
         new DataSourcesResource(inventoryView, null, null, indexingServiceClient, null, null);
-    Response response = dataSourcesResource.killUnusedSegmentsInInterval("datasource1", interval);
+    Response response = dataSourcesResource.killUnusedSegmentsInInterval("datasource1", interval, null);
 
     Assert.assertEquals(200, response.getStatus());
     Assert.assertEquals(null, response.getEntity());
@@ -614,7 +614,7 @@ public class DataSourcesResourceTest
         new DataSourcesResource(inventoryView, null, null, indexingServiceClient, null, null);
     try {
       Response response =
-          dataSourcesResource.markAsUnusedAllSegmentsOrKillUnusedSegmentsInInterval("datasource", "true", "???");
+          dataSourcesResource.markAsUnusedAllSegmentsOrKillUnusedSegmentsInInterval("datasource", "true", "???", null);
       // 400 (Bad Request) or an IllegalArgumentException is expected.
       Assert.assertEquals(400, response.getStatus());
       Assert.assertNotNull(response.getEntity());

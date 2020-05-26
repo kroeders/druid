@@ -32,15 +32,26 @@ public class ClientKillUnusedSegmentsTaskQuery implements ClientTaskQuery
 {
   private final String dataSource;
   private final Interval interval;
+  private final Integer numThreads;
 
+  
+  @JsonCreator
+  public ClientKillUnusedSegmentsTaskQuery(@JsonProperty("dataSource") String dataSource,
+      @JsonProperty("interval") Interval interval)
+  {
+    this(dataSource, interval, null);
+  }
+  
   @JsonCreator
   public ClientKillUnusedSegmentsTaskQuery(
       @JsonProperty("dataSource") String dataSource,
-      @JsonProperty("interval") Interval interval
+      @JsonProperty("interval") Interval interval,
+      @JsonProperty("numThreads") Integer numThreads
   )
   {
     this.dataSource = dataSource;
     this.interval = interval;
+    this.numThreads = numThreads;
   }
 
   @JsonProperty
@@ -50,6 +61,12 @@ public class ClientKillUnusedSegmentsTaskQuery implements ClientTaskQuery
     return "kill";
   }
 
+  @JsonProperty
+  public Integer getNumThreads()
+  {
+    return numThreads;
+  }
+  
   @JsonProperty
   @Override
   public String getDataSource()

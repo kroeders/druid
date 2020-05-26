@@ -33,7 +33,7 @@ import java.util.Set;
 public class NoopIndexingServiceClient implements IndexingServiceClient
 {
   @Override
-  public void killUnusedSegments(String dataSource, Interval interval)
+  public void killUnusedSegments(String dataSource, Interval interval, Integer numThreads)
   {
 
   }

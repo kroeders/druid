@@ -31,8 +31,15 @@ import java.util.Set;
 
 public interface IndexingServiceClient
 {
-  void killUnusedSegments(String dataSource, Interval interval);
 
+  void killUnusedSegments(String dataSource, Interval interval, Integer numThreads);
+
+  default void killUnusedSegments(String dataSource, Interval interval)
+  {
+    killUnusedSegments(dataSource, interval, null);
+  }
+
+  
   int killPendingSegments(String dataSource, DateTime end);
 
   String compactSegments(

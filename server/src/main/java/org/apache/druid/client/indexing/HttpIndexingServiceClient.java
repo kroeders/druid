@@ -65,9 +65,9 @@ public class HttpIndexingServiceClient implements IndexingServiceClient
   }
 
   @Override
-  public void killUnusedSegments(String dataSource, Interval interval)
+  public void killUnusedSegments(String dataSource, Interval interval, Integer numThreads)
   {
-    runTask(new ClientKillUnusedSegmentsTaskQuery(dataSource, interval));
+    runTask(new ClientKillUnusedSegmentsTaskQuery(dataSource, interval, numThreads));
   }
 
   @Override
@@ -108,7 +108,7 @@ public class HttpIndexingServiceClient implements IndexingServiceClient
       final StringFullResponseHolder response = druidLeaderClient.go(
           druidLeaderClient.makeRequest(HttpMethod.POST, "/druid/indexer/v1/task")
                            .setContent(MediaType.APPLICATION_JSON, jsonMapper.writeValueAsBytes(taskObject))
-      );
+        );
 
       if (!response.getStatus().equals(HttpResponseStatus.OK)) {
         if (!Strings.isNullOrEmpty(response.getContent())) {

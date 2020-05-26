@@ -390,6 +390,7 @@ public class TaskSerdeTest
         null,
         "foo",
         Intervals.of("2010-01-01/P1D"),
+        null,
         null
     );
 
@@ -405,6 +406,7 @@ public class TaskSerdeTest
     Assert.assertEquals(task.getGroupId(), task2.getGroupId());
     Assert.assertEquals(task.getDataSource(), task2.getDataSource());
     Assert.assertEquals(task.getInterval(), task2.getInterval());
+    Assert.assertEquals(task.getNumThreads().longValue(), 1l);
 
     final KillUnusedSegmentsTask task3 = (KillUnusedSegmentsTask) jsonMapper.readValue(
         jsonMapper.writeValueAsString(
